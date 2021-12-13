@@ -1,0 +1,66 @@
+body {
+    display:flex;
+}
+
+#first {
+
+width: 75%;
+height: 950px;
+  
+
+}
+button {
+    height: 23px;
+}
+#instructions {
+
+    width: 25%;
+    height: 950px;
+    
+    background-color: aqua;
+}
+
+
+#first {
+    display:flex;
+    flex-direction:column;
+}
+
+header {
+    background-color: yellow;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 10%;
+}
+main {
+    margin-top: 2%;
+    height: 80%;
+    width:100%;
+    display:flex;
+    justify-content: space-around ;
+    flex-wrap: wrap;
+    overflow: auto;
+}
+
+  
+footer {
+    height: 10% ;
+    background-color: red;
+}
+
+.cont{
+    
+    width: 40%;
+    height: 280px ;
+    background-color: rgb(105, 180, 105);
+     display: flex;
+     margin-top: 20px;
+        
+}
+.secdiv {
+    width: 96%;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+}
