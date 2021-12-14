@@ -2,32 +2,58 @@ let add = document.querySelector("#add");
 let sort = document.querySelector("#sort");
 let main = document.querySelector("main");
 
+let data=[]
+
 function getRandomInt() {
   return Math.floor(Math.random() * 2000);
 }
 
-function Createcard() {
+
+
+
+function Createcard(argument) {
   let div = document.createElement("div");
   let p = document.createElement("p");
-  p.innerText = getRandomInt();
+  p.innerText = argument.id;
   let secdiv = document.createElement("div");
   secdiv.append(p);
   secdiv.classList.add("secdiv");
   div.append(secdiv);
   let but = document.createElement("button");
   but.innerText = "X";
-  but.dataset.name = "del";
+  but.addEventListener("click",()=>{but.parentElement.remove()})
   div.append(but);
   div.classList.add("cont");
   main.append(div);
 }
 
-add.addEventListener("click", Createcard);
-main.addEventListener("click", function (e) {
-  if (e.target.dataset.name === "del") {
-    e.target.parentElement.remove();
-  }
-});
+function refreshMain(){
+  data.forEach((value)=>{Createcard(value)})
+}
+
+function deleteElements(){
+  
+ for(let i=0;i<=data.length;i++){
+  
+  main.lastElementChild.remove()
+  
+ 
+}
+}
+
+function addData(){
+  data.push({
+    id:getRandomInt() 
+  })
+}
+
+
+
+add.addEventListener("click",addData)
+add.addEventListener("click", deleteElements);
+add.addEventListener("click",refreshMain)
+
+
 
 let bubbleSort = (inputArr) => {
   let len = inputArr.length;
@@ -42,16 +68,20 @@ let bubbleSort = (inputArr) => {
   }
   return inputArr;
 };
+sort.addEventListener("click",deleteElements)
+sort.addEventListener("click", sorting)
 
-sort.addEventListener("click", () => {
-  let arr = [];
-  for (let i of main.children) {
-    arr.push(Number(i.firstElementChild.innerText));
-  }
-  let check = 0;
-  bubbleSort(arr);
-  for (let i of main.children) {
-    i.firstElementChild.innerText = arr[check];
-    check++;
-  }
-});
+function sorting(){
+  let arr=[]
+ data.forEach((value)=>{arr.push(value.id)})
+ bubbleSort(arr)
+ 
+
+ arr.forEach((value)=>{data.forEach((arg)=>{
+if(arg.id===value){
+  Createcard(arg)
+}
+
+ })
+ })
+}
