@@ -1,87 +1,81 @@
-let add = document.querySelector("#add");
-let sort = document.querySelector("#sort");
-let main = document.querySelector("main");
+const add = document.querySelector("#add");
+const sort = document.querySelector("#sort");
+const main = document.querySelector("main");
 
 let data=[]
 
 function getRandomInt() {
   return Math.floor(Math.random() * 2000);
-}
+};
 
+function getRandomString() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+};
 
 
 
 function Createcard(argument) {
-  let div = document.createElement("div");
-  let p = document.createElement("p");
+  const div = document.createElement("div");
+  const p = document.createElement("p");
   p.innerText = argument.id;
-  let secdiv = document.createElement("div");
+  const secdiv = document.createElement("div");
   secdiv.append(p);
   secdiv.classList.add("secdiv");
   div.append(secdiv);
-  let but = document.createElement("button");
+  const but = document.createElement("button");
   but.innerText = "X";
-  but.addEventListener("click",()=>{but.parentElement.remove()})
+  but.addEventListener("click",()=>{but.parentElement.remove();
+  for( var i = 0; i < data.length; i++){   
+  if ( data[i].value === argument.value){ 
+   data.splice(i, 1); 
+  }};
+  });
   div.append(but);
   div.classList.add("cont");
   main.append(div);
 }
 
 function refreshMain(){
-  data.forEach((value)=>{Createcard(value)})
-}
+  data.forEach((value)=>{Createcard(value)});
+};
 
 function deleteElements(){
-  
- for(let i=0;i<=data.length;i++){
-  
-  main.lastElementChild.remove()
-  
- 
-}
-}
+  main.innerText="";
+};
 
 function addData(){
-  data.push({
-    id:getRandomInt() 
-  })
-}
+  data.push({id:getRandomInt(),value:getRandomString()});
+};
+ 
+add.addEventListener("click",()=>{
+  deleteElements();
+  addData();
+  refreshMain();
+});
 
 
-
-add.addEventListener("click",addData)
-add.addEventListener("click", deleteElements);
-add.addEventListener("click",refreshMain)
-
-
-
-let bubbleSort = (inputArr) => {
-  let len = inputArr.length;
+const bubbleSort = (inputArr) => {
+  const len = inputArr.length;
   for (let i = 0; i < len; i++) {
     for (let j = 0; j < len; j++) {
-      if (inputArr[j] > inputArr[j + 1]) {
+      
+      
+      if (inputArr[j].id> inputArr[j+1]?.id ) 
+      {
         let tmp = inputArr[j];
-        inputArr[j] = inputArr[j + 1];
-        inputArr[j + 1] = tmp;
+        inputArr[j] = inputArr[j+1]; 
+        inputArr[j+1] = tmp;
       }
     }
   }
   return inputArr;
 };
-sort.addEventListener("click",deleteElements)
-sort.addEventListener("click", sorting)
+sort.addEventListener("click",()=>{
+  deleteElements();
+  bubbleSort(data);
+  refreshMain();
+})
 
-function sorting(){
-  let arr=[]
- data.forEach((value)=>{arr.push(value.id)})
- bubbleSort(arr)
- 
 
- arr.forEach((value)=>{data.forEach((arg)=>{
-if(arg.id===value){
-  Createcard(arg)
-}
-
- })
- })
-}
